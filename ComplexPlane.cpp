@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "ComplexPlane.h"
 #include <cmath>
+#include <sstream>
 
 using namespace sf;
 using namespace std;
@@ -42,7 +43,12 @@ void ComplexPlane::setMouseLocation(Vector2f coord)
 void ComplexPlane::loadText(Text& text)
 {
     // Figure out string stream stuff
-    
+    stringstream infoStream;
+
+    infoStream << "(" << m_mouseLocation.x << ", " << m_mouseLocation.y << ")";
+
+    text.setString(infoStream.str());
+
 }
 
 size_t ComplexPlane::countIterations(Vector2f coord)

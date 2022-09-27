@@ -77,6 +77,14 @@ int main()
 
             // convert it to world coordinates
             sf::Vector2f worldPos = window.mapPixelToCoords(pixelPos);
+
+            if (event.type == sf::Event::MouseMoved)
+            {
+                Vector2i pixelPos = sf::Mouse::getPosition(window);
+                Vector2f planePosition = window.mapPixelToCoords(pixelPos);
+
+                mandelbrotPlane.setMouseLocation(planePosition);
+            }
             if (event.type == sf::Event::MouseButtonPressed)
             {
                 if (event.mouseButton.button == sf::Mouse::Left) //zoom in
@@ -103,13 +111,6 @@ int main()
 
                     mandelbrotPlane.setCenter(planePosition);
                     mandelbrotPlane.zoomOut();
-                }
-                if (event.type == sf::Event::MouseMoved)
-                {
-                    Vector2i pixelPos = sf::Mouse::getPosition(window);
-                    Vector2f planePosition = window.mapPixelToCoords(pixelPos);
-
-                    mandelbrotPlane.setMouseLocation(planePosition);
                 }
               //Set the state to CALCULATING to generate the new complex plane view in the update segment
             // mousemove event
@@ -144,6 +145,10 @@ int main()
         ****************************************
         */
         window.clear();
+
+        mandelbrotPlane.loadText(infoText);
+
+        window.draw(infoText);
 
         window.display();
     }
