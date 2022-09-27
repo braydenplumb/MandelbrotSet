@@ -1,1 +1,1 @@
-# ChaosGame
+# Mandelbrot Set
