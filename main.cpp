@@ -100,6 +100,7 @@ int main()
 
                     mandelbrotPlane.setCenter(planePosition);
                     mandelbrotPlane.zoomIn();
+                    currentState = CALCULATING;
                 }
                 
                 if (event.mouseButton.button == sf::Mouse::Right)// zoom out
@@ -113,6 +114,7 @@ int main()
 
                     mandelbrotPlane.setCenter(planePosition);
                     mandelbrotPlane.zoomOut();
+                    currentState = CALCULATING;
                 }
               //Set the state to CALCULATING to generate the new complex plane view in the update segment
             // mousemove event
