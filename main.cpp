@@ -77,12 +77,12 @@ int main()
             sf::Vector2i pixelPos = sf::Mouse::getPosition(window);
 
             // convert it to world coordinates
-            sf::Vector2f worldPos = window.mapPixelToCoords(pixelPos);
+            sf::Vector2f worldPos = window.mapPixelToCoords(pixelPos, mandelbrotPlane.getView());
 
             if (event.type == sf::Event::MouseMoved)
             {
                 Vector2i pixelPos = sf::Mouse::getPosition(window);
-                Vector2f planePosition = window.mapPixelToCoords(pixelPos);
+                Vector2f planePosition = window.mapPixelToCoords(pixelPos, mandelbrotPlane.getView());
 
                 mandelbrotPlane.setMouseLocation(planePosition);
             }
@@ -96,7 +96,7 @@ int main()
                     std::cout << "mouse y: " << event.mouseButton.y << std::endl;
 
                     Vector2i pixelPos = sf::Mouse::getPosition(window);
-                    Vector2f planePosition = window.mapPixelToCoords(pixelPos);
+                    Vector2f planePosition = window.mapPixelToCoords(pixelPos, mandelbrotPlane.getView());
 
                     mandelbrotPlane.setCenter(planePosition);
                     mandelbrotPlane.zoomIn();
@@ -109,7 +109,7 @@ int main()
                     std::cout << "mouse y: " << event.mouseButton.y << std::endl;
 
                     Vector2i pixelPos = sf::Mouse::getPosition(window);
-                    Vector2f planePosition = window.mapPixelToCoords(pixelPos);
+                    Vector2f planePosition = window.mapPixelToCoords(pixelPos, mandelbrotPlane.getView());
 
                     mandelbrotPlane.setCenter(planePosition);
                     mandelbrotPlane.zoomOut();
@@ -141,7 +141,7 @@ int main()
                     for (int i = 0; i < resolution.y; i++)
                     {
                         planePoints[pointCounter].position = { (float)j,(float)i };
-                        Vector2f planePosition = window.mapPixelToCoords(Vector2i(j, i));
+                        Vector2f planePosition = window.mapPixelToCoords(Vector2i(j, i), mandelbrotPlane.getView());
                         
                         size_t iterations = mandelbrotPlane.countIterations(planePosition);
                         Uint8 r;

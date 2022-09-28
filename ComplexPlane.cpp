@@ -1,7 +1,9 @@
 #include <SFML/Graphics.hpp>
 #include "ComplexPlane.h"
+#include <iostream>
 #include <cmath>
 #include <sstream>
+#include <complex>
 
 using namespace sf;
 using namespace std;
@@ -35,6 +37,10 @@ void ComplexPlane::setCenter(Vector2f coord)
     m_view.setCenter(coord);
 }
 
+View ComplexPlane::getView(){
+    return m_view;
+}
+
 void ComplexPlane::setMouseLocation(Vector2f coord)
 {
     m_mouseLocation = coord;
@@ -53,7 +59,18 @@ void ComplexPlane::loadText(Text& text)
 
 size_t ComplexPlane::countIterations(Vector2f coord)
 {
-    size_t size = 17;
+    size_t size = 0;
+
+    complex<double> c (coord.x, coord.y);
+    complex<double> z (0, 0);
+
+    z = z*z + c;
+
+    while( ((z.real()*z.real() + z.imag() * z.imag()) <= 2) && ((int)size < MAX_ITER) )
+    {
+      z = z*z + c;
+      size++;
+    }
     return size;
 }
 
