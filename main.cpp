@@ -8,7 +8,8 @@ using namespace sf;
 using namespace std;
 
 sf::Color getColor(int);
-enum building{
+
+enum building {
   CALCULATING,
   DISPLAYING,
 };
@@ -45,7 +46,8 @@ int main()
     //Construct an object of type ComplexPlane
     //Construct Font and Text objects
         
-    VertexArray Points;
+    VertexArray planePoints(Points);
+    planePoints.resize(resolution.x * resolution.y);
 
     //Create an enum class state variable with states CALCULATINGand DISPLAYING
     enum states {
@@ -54,7 +56,6 @@ int main()
     };
 
     states currentState = CALCULATING;
-    
 
     while (window.isOpen())
     {
@@ -85,6 +86,7 @@ int main()
 
                 mandelbrotPlane.setMouseLocation(planePosition);
             }
+
             if (event.type == sf::Event::MouseButtonPressed)
             {
                 if (event.mouseButton.button == sf::Mouse::Left) //zoom in
@@ -117,25 +119,45 @@ int main()
               
             }
         }
+
         if (Keyboard::isKeyPressed(Keyboard::Escape))
         {
             window.close();
         }
+
         /*
         ****************************************
         Update
         ****************************************
         */
 
-
-
         switch (currentState)
         {
-            CALCULATING:
+            case CALCULATING :
+            {
+                int pointCounter = 0;
+                for (int j = 0; j < resolution.x; j++)
+                {
+                    for (int i = 0; i < resolution.y; i++)
+                    {
+                        planePoints[pointCounter].position = { (float)j,(float)i };
+                        Vector2f planePosition = window.mapPixelToCoords(Vector2i(j, i));
+                        
+                        size_t iterations = mandelbrotPlane.countIterations(planePosition);
+                        Uint8 r;
+                        Uint8 g;
+                        Uint8 b;
+                        mandelbrotPlane.iterationsToRGB(iterations, r, g, b);
 
+                        planePoints[pointCounter].color = {r, g, b};
+
+                        pointCounter++;
+                    }
+                }
+                currentState = DISPLAYING;
                 break;
-            DISPLAYING:
-
+            }
+            case DISPLAYING :
                 break;
         };
 
@@ -147,6 +169,8 @@ int main()
         window.clear();
 
         mandelbrotPlane.loadText(infoText);
+
+        window.draw(planePoints);
 
         window.draw(infoText);
 

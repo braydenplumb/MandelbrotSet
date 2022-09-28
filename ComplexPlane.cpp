@@ -53,7 +53,7 @@ void ComplexPlane::loadText(Text& text)
 
 size_t ComplexPlane::countIterations(Vector2f coord)
 {
-    size_t size = 1;
+    size_t size = 17;
     return size;
 }
 
