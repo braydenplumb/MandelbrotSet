@@ -31,7 +31,7 @@ int main()
     // Where is the mouse in relation to screen coordinates
     Vector2i mouseScreenPosition;
 
-    ComplexPlane mandelbrotPlane(1);
+    ComplexPlane mandelbrotPlane(resolution.y / resolution.x);
 
     Font mainFont;
     mainFont.loadFromFile("fonts/VT323-Regular.ttf");

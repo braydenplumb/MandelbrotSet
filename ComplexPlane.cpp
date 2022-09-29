@@ -20,7 +20,8 @@ void ComplexPlane::zoomIn()
 {
     m_zoomCount++;
     double x_size = BASE_WIDTH * pow(BASE_ZOOM, m_zoomCount);
-    double y_size = BASE_HEIGHT * pow(BASE_ZOOM, m_zoomCount);
+    double y_size = -BASE_HEIGHT * pow(BASE_ZOOM, m_zoomCount) * m_aspectRatio;
+    cout << x_size << endl << y_size << endl << endl;
     m_view.setSize(x_size, y_size);
 }
 
@@ -28,7 +29,7 @@ void ComplexPlane::zoomOut()
 {
     m_zoomCount--;
     double x_size = BASE_WIDTH * pow(BASE_ZOOM, m_zoomCount);
-    double y_size = BASE_HEIGHT * pow(BASE_ZOOM, m_zoomCount);
+    double y_size = -BASE_HEIGHT * pow(BASE_ZOOM, m_zoomCount) * m_aspectRatio;
     m_view.setSize(x_size, y_size);
 }
 
