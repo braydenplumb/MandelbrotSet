@@ -19,16 +19,16 @@ ComplexPlane::ComplexPlane(float aspectRatio)
 void ComplexPlane::zoomIn()
 {
     m_zoomCount++;
-    int x_size = BASE_WIDTH * pow(BASE_ZOOM, m_zoomCount);
-    int y_size = BASE_HEIGHT * pow(BASE_ZOOM, m_zoomCount);
+    double x_size = BASE_WIDTH * pow(BASE_ZOOM, m_zoomCount);
+    double y_size = BASE_HEIGHT * pow(BASE_ZOOM, m_zoomCount);
     m_view.setSize(x_size, y_size);
 }
 
 void ComplexPlane::zoomOut()
 {
     m_zoomCount--;
-    int x_size = BASE_WIDTH * pow(BASE_ZOOM, m_zoomCount);
-    int y_size = BASE_HEIGHT * pow(BASE_ZOOM, m_zoomCount);
+    double x_size = BASE_WIDTH * pow(BASE_ZOOM, m_zoomCount);
+    double y_size = BASE_HEIGHT * pow(BASE_ZOOM, m_zoomCount);
     m_view.setSize(x_size, y_size);
 }
 
@@ -51,7 +51,15 @@ void ComplexPlane::loadText(Text& text)
     // Figure out string stream stuff
     stringstream infoStream;
 
-    infoStream << "(" << m_mouseLocation.x << ", " << m_mouseLocation.y << ")";
+    infoStream << "Mandelbrot Set" << endl;
+
+    infoStream << "Cursor: (" << m_mouseLocation.x << ", " << m_mouseLocation.y << ")" << endl;
+
+    infoStream << "Center:(GET COORD)" << endl;
+
+    infoStream << "Left-Click to Zoom in" << endl;
+
+    infoStream << "Right-Click to Zoom in" << endl;
 
     text.setString(infoStream.str());
 
@@ -61,12 +69,12 @@ size_t ComplexPlane::countIterations(Vector2f coord)
 {
     size_t size = 0;
 
-    complex<long double> c (coord.x, coord.y);
-    complex<long double> z (0, 0);
+    complex<float> c (coord.x, coord.y);
+    complex<float> z (0, 0);
 
     z = z*z + c;
 
-    while( ((z.real()*z.real() + z.imag() * z.imag()) <= 10) && ((int)size <= MAX_ITER) )
+    while( ((z.real()*z.real() + z.imag() * z.imag()) <= 4.0) && ((int)size <= MAX_ITER) )
     {
       z = z*z + c;
       size++;
@@ -89,28 +97,28 @@ void ComplexPlane::iterationsToRGB(size_t count, Uint8& r, Uint8& g, Uint8& b)
         // colour gradient:      Red -> Blue -> Green -> Red -> Black
         // corresponding values:  0  ->  16  ->  32   -> 64  ->  127 (or -1)
         if (count < 4) {
-            r = 254;
-            g = 168;
-            b = 95;
+            r = 32 * (count - 16);
+            g = 32 * (16 - count) -1;
+            b = 0;
         }
-        else if (count < 14) {
-            r = 206;
-            g = 127;
-            b = 129;
+        else if (count < 16) {
+            r = 16 * (16 - count);
+            g = 0;
+            b = 16 * count -1;
         }
         
-        else if (count < 28) {
-            r = 226;
-            g = 97;
-            b = 89;
+        else if (count < 32) {
+            r = 0;
+            g = 16 * count - 1;
+            b = 16 * (32 - count) - 1;
         } else if (count < 64) {
-            r = 226;
-            g = 28;
-            b = 97;
+            r = 8 * (count - 32);
+            g = 8 * (64 - count) -1;
+            b = 0;
         } else { // range is 64 - 127
-            r = 56;
-            g = 22;
-            b = 49;
+            r = 0;
+            g = 0;
+            b = 0;
         }
     }
 }

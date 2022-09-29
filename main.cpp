@@ -170,11 +170,13 @@ int main()
         */
         window.clear();
 
-        mandelbrotPlane.loadText(infoText);
+        
 
         window.draw(planePoints);
 
         window.draw(infoText);
+
+        mandelbrotPlane.loadText(infoText);
 
         window.display();
     }
