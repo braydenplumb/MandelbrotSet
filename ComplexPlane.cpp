@@ -55,7 +55,7 @@ void ComplexPlane::loadText(Text& text)
 
     infoStream << "Cursor: (" << m_mouseLocation.x << ", " << m_mouseLocation.y << ")" << endl;
 
-    infoStream << "Center:(GET COORD)" << endl;
+    infoStream << "Center:(" << m_view.getCenter().x << ", " << m_view.getCenter().y << ")" << endl;
 
     infoStream << "Left-Click to Zoom in" << endl;
 
