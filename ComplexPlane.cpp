@@ -74,7 +74,7 @@ size_t ComplexPlane::countIterations(Vector2f coord)
 
     z = z*z + c;
 
-    while( ((z.real()*z.real() + z.imag() * z.imag()) <= 4.0) && ((int)size <= MAX_ITER) )
+    while( ((z.real()*z.real() + z.imag() * z.imag()) <= 10.0) && ((int)size <= MAX_ITER) )
     {
       z = z*z + c;
       size++;
