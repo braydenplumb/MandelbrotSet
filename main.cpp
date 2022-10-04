@@ -7,20 +7,13 @@
 using namespace sf;
 using namespace std;
 
-sf::Color getColor(int);
-
-enum building {
-  CALCULATING,
-  DISPLAYING,
-};
-
 int main()
 {
     // Create a video mode object
     Vector2f resolution;
-    resolution.x = VideoMode::getDesktopMode().width;
-    resolution.y = VideoMode::getDesktopMode().height;
-    RenderWindow window(VideoMode(resolution.x, resolution.y),"Mandlebrot", Style::Fullscreen);
+    resolution.x = 600;
+    resolution.y = 600;
+    RenderWindow window(VideoMode(resolution.x, resolution.y),"Mandlebrot", Style::Default);
 
     // Create a an SFML View for the main action
     View mainView(sf::FloatRect(0, 0, resolution.x, resolution.y));
@@ -144,7 +137,7 @@ int main()
                     {
                         planePoints[pointCounter].position = { (float)j,(float)i };
                         Vector2f planePosition = window.mapPixelToCoords(Vector2i(j, i), mandelbrotPlane.getView());
-                        
+
                         size_t iterations = mandelbrotPlane.countIterations(planePosition);
                         Uint8 r;
                         Uint8 g;
@@ -154,8 +147,17 @@ int main()
                         planePoints[pointCounter].color = {r, g, b};
 
                         pointCounter++;
+
+                        if (pointCounter % (600 * 100) == 0)
+                        {
+                            window.clear();
+                            window.draw(planePoints);
+                            window.display();
+                        }
+
                     }
                 }
+
                 currentState = DISPLAYING;
                 break;
             }
@@ -169,15 +171,9 @@ int main()
         ****************************************
         */
         window.clear();
-
-        
-
         window.draw(planePoints);
-
-        window.draw(infoText);
-
         mandelbrotPlane.loadText(infoText);
-
+        window.draw(infoText);
         window.display();
     }
 }
